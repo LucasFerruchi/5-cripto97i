@@ -1,12 +1,12 @@
 import React from "react";
 
-const ErrorScreen = () => {
+const AboutScreen = () => {
   return (
     <>
       <div className="container">
         <div className="row">
           <div className="col">
-            <h2>ErrorScreen</h2>
+            <h2>AboutScreen</h2>
           </div>
         </div>
       </div>
@@ -14,4 +14,4 @@ const ErrorScreen = () => {
   );
 };
 
-export default ErrorScreen;
+export default AboutScreen;
