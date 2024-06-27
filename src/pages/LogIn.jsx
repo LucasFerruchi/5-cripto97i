@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
+  const navigate = useNavigate();
+
   //! estados para cada uno de los campos
   //   const [email, setEmail] = useState("");
   //   const [password, setPassword] = useState("");
@@ -16,12 +19,43 @@ const LogIn = () => {
     password: "",
   });
 
+  const { email, password } = formValues;
+
+  const [showAlert, setShowAlert] = useState(false);
+
   const handleChange = (e) => {
     // console.log(e.target.value);
+
+    setShowAlert(false);
+
     setFormValues({
+      //SPREAD OPERATOR "..."
       ...formValues,
-      [e.target.value]: e.target.value,
+      [e.target.name]: e.target.value,
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    //usuario de ejemplo
+    const user = {
+      email: "lucas@lucas.com",
+      password: "123456",
+    };
+
+    // if (!formValues.email || !formValues.password) {
+    if (!email || !password) {
+      // alert("Faltan datos en los campos!");
+      setShowAlert(true);
+    }
+
+    //validar el usuario REGISTRADO
+    if (email === user.email && password === user.password) {
+      navigate("/");
+    } else {
+      alert("Email o password incorrectos!");
+    }
   };
 
   return (
@@ -37,7 +71,7 @@ const LogIn = () => {
         </div>
         <div className="row">
           <div className="col col-md-6 offset-md-3">
-            <form onSubmit="">
+            <form onSubmit={handleSubmit}>
               <div className="mb-3 d-grid">
                 <label>Email</label>
                 <input
@@ -46,6 +80,7 @@ const LogIn = () => {
                   name="email"
                   value={formValues.email}
                   onChange={handleChange}
+                  // required
                 />
               </div>
               <div className="mb-3 d-grid">
@@ -61,6 +96,12 @@ const LogIn = () => {
                   onChange={handleChange}
                 />
               </div>
+              {showAlert && (
+                <p className="bg-danger text-light text-center m-3">
+                  Faltan datos, complete todos los campos!
+                </p>
+              )}
+
               <div className="mb-3 d-grid">
                 <button className="btn btn-success">Sign in</button>
               </div>
