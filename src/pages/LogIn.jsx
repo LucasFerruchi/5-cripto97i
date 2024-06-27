@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const LogIn = () => {
+const LogIn = ({ cambiarLogin }) => {
   const navigate = useNavigate();
 
   //! estados para cada uno de los campos
@@ -52,6 +52,7 @@ const LogIn = () => {
 
     //validar el usuario REGISTRADO
     if (email === user.email && password === user.password) {
+      cambiarLogin();
       navigate("/");
     } else {
       alert("Email o password incorrectos!");

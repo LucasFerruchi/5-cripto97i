@@ -1,28 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import "./App.css";
 // importar paginas
-
-import HomeScreen from "./pages/HomeScreen";
-// import AdminScreen from "./pages/AdminScreen";
-import ErrorScreen from "./pages/ErrorScreen";
 import LogIn from "./pages/LogIn";
-import AboutScreen from "./pages/AboutScreen";
-import NavBar from "./components/NavBar";
+import RoutesApp from "./routes/RoutesApp";
+import ProtectedRoutes from "./routes/ProtectedRoutes";
 
 function App() {
+  const [login, setLogin] = useState(false);
+
+  const cambiarLogin = () => {
+    setLogin(!login);
+  };
+
   return (
     <>
       <BrowserRouter>
-        <NavBar />
         <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/About" element={<AboutScreen />} />
-
-          {/* <Route path="/Admin" element={<AdminScreen />} /> */}
-          <Route path="/login" element={<LogIn />} />
-
-          <Route path="*" element={<ErrorScreen />} />
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoutes login={login}>
+                <RoutesApp cambiarLogin={cambiarLogin} />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/login"
+            element={<LogIn cambiarLogin={cambiarLogin} />}
+          />
         </Routes>
       </BrowserRouter>
     </>
