@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import numeral from "numeral";
 
 const TableCoins = ({ coins }) => {
@@ -19,10 +20,12 @@ const TableCoins = ({ coins }) => {
             <tr key={coin.id}>
               <td>{coin.rank}</td>
               <td>
-                <img
-                  src={`https://assets.coincap.io/assets/icons/${coin.symbol.toLowerCase()}@2x.png`}
-                  alt={coin.name}
-                />
+                <Link to={`/coin/${coin.id}`}>
+                  <img
+                    src={`https://assets.coincap.io/assets/icons/${coin.symbol.toLowerCase()}@2x.png`}
+                    alt={coin.name}
+                  />
+                </Link>
               </td>
               <td>{coin.name}</td>
               <td>{numeral(coin.priceUsd).format("$0,0.00")}</td>
