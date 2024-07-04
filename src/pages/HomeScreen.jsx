@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { getCoins } from "../helpers/coinsApi";
 import TableCoins from "../components/TableCoins";
+import SearchCoins from "../components/SearchCoins";
 
 const HomeScreen = () => {
   const [coins, setCoins] = useState(null);
 
-  useEffect(() => {
-    traerMonedas();
-  }, []);
+  //estado para la barra de busqueda
+  const [inputSearch, setInputSearch] = useState("");
 
-  const traerMonedas = async () => {
-    const { data } = await getCoins();
+  useEffect(() => {
+    traerMonedas(inputSearch);
+  }, [inputSearch]);
+
+  const traerMonedas = async (termino) => {
+    const { data } = await getCoins(termino);
 
     setCoins(data);
   };
@@ -28,14 +32,19 @@ const HomeScreen = () => {
             <div className="d-flex justify-content-end">
               <button
                 className="btn btn-outline-success"
-                onClick={traerMonedas}
+                onClick={() => traerMonedas("")}
               >
                 <i className="fa fa-refresh" aria-hidden="true"></i>
               </button>
             </div>
           </div>
         </div>
-        <div className="row">{/*Barra de busqueda */}</div>
+        <div className="row">
+          <SearchCoins
+            inputSearch={inputSearch}
+            setInputSearch={setInputSearch}
+          />
+        </div>
         <div className="row mt-5">
           {coins ? (
             <div className="col text-center">
